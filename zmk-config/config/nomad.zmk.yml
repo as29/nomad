@@ -1,0 +1,14 @@
+file_format: "1"
+id: nomad
+name: Nomad
+type: shield
+url: https://github.com/as29/nomad
+requires: [pro_micro]
+exposes: [i2c_oled]
+features:
+  - keys
+  - display
+  - encoder
+siblings:
+  - nomad_left
+  - nomad_right
