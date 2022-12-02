@@ -17,21 +17,21 @@ points:
         # all keys 1u choc keycap size by default
       1u: true
     footprints:
-      choc_hotswap:
-      # Using low profile chocs
-        type: choc
-        params:
-          hotswap: true
-          reverse: true
-          keycaps: true
-        nets:
-          from: =colrow
-          to: =column_net
+      # choc_hotswap:
+      # # Using low profile chocs
+        # type: choc
+        # params:
+          # hotswap: true
+          # reverse: true
+          # keycaps: true
+        # nets:
+          # from: =colrow
+          # to: =column_net
       # choc:
       # # footprints for direct solder if needed
         # type: choc
         # anchor:
-          # rotate: 180
+          # #rotate: 180
         # params:
           # hotswap: false
           # reverse: true
@@ -39,6 +39,18 @@ points:
         # nets:
           # from: =colrow
           # to: =column_net
+      choc_mini:
+      # footprints for direct solder if needed
+        type: chocmini
+        # anchor:
+          # rotate: 180
+        params:
+          hotswap: false
+          reverse: true
+          keycaps: true
+        nets:
+          from: =colrow
+          to: =column_net
       diode:
       # adding a diode for each switch at the bottom
       # of the switch. Adds through holes and SMD pads.
@@ -47,14 +59,21 @@ points:
           from: =colrow
           to: =row_net
         anchor:
-          shift: [0, -5]
+          #shift: [0, -5]
+          shift: [0.45cx, 0]
+          rotate: 90
         params:
           tht: true
   zones:
     matrix:
       columns:                # -------------------- COLUMNS
+        #outer:
+        #  spread: cx
+        #  key:
+        #    column_net: P21
+        #    bind: [.1,0,0,0]
         pinky:
-          stagger: 0.25 cy
+          #stagger: 0.25 cy
           spread: cx
           key:
             column_net: P20
@@ -70,13 +89,13 @@ points:
           spread: cx
           key:
             column_net: P18
-            bind: [0,0,1.4cy,0]
+            bind: [0,0,1.3cy,0]
         index:
           stagger: -6
           spread: cx
           key:
             column_net: P15
-            bind: [0,0,1cy,0]
+            bind: [0,0,1.3cy-6,0]
         inner:
           stagger: -0.3cy
           spread: cx
@@ -95,6 +114,7 @@ points:
         ref: matrix_index_bottom
       columns:
         meta:
+          spread: 0.15cx
           stagger: -1.7 cy
           #rotate: -15
           key:
@@ -349,7 +369,7 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_top
-          shift: [22.5, -18.75]
+          shift: [22.5, -17.5]
           rotate: 270
       # pad_plus:               # ------------------ battery +
         # type: pad
@@ -369,8 +389,9 @@ pcbs:
         type: jstph
         anchor:
           ref:
-            - matrix_inner_top
-          shift: [0.5 cx, -0.25cy]
+            - matrix_inner_bottom
+          shift: [0.9 cx, -0.5cy]     #TODO reverse
+          rotate: 90
         params:
           side: F
         nets:
@@ -443,9 +464,9 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [1.47cx, -0.92cy]
-          rotate: 90
-        nets:                            #TODO check nets
+          shift: [1.6cx, -1.35cy]
+          rotate: -30
+        nets:                            #TODO reverse
           from: ''
           to: ''
           A: P04
@@ -456,7 +477,7 @@ pcbs:
         anchor:
           ref:
             - matrix_middle_bottom
-          shift: [0, -1.2cy]              #TODO adjust pos.
+          shift: [1, -1.3cy]              #TODO reverse
         nets:                             #TODO check nets
           from: P19
           to: P08
@@ -482,7 +503,8 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.77cx, -0.55cy]
+          shift: [1.7cx, -0.53cy]
+          rotate: -90
         params:
           side: F
         nets:									#TODO rotate and adjust pos.
@@ -493,7 +515,8 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.77cx, -0.55cy]
+          shift: [1.7cx, -0.53cy]
+          rotate: -90
         params:
           side: B
         nets:									#TODO rotate and adjust pos.
@@ -504,11 +527,11 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.8cx, -0.34cy]
+          shift: [0.845cx, -0.26cy]
           rotate: 90
         params:
           side: F
-        nets:									#TODO define nets
+        nets:									#TODO reverse
           SDA: P22
           SCL: P21
           VCC: VCC
@@ -519,7 +542,7 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.78cx + 2.54,-0.08cy]
+          shift: [0.825cx + 2.54,0]
           rotate: -90
         params:
           side: F
@@ -531,7 +554,7 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.78cx + 2*2.54,-0.08cy]
+          shift: [0.825cx + 2*2.54,0]
           rotate: -90
         params:
           side: F
@@ -543,7 +566,7 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.78cx + 3*2.54,-0.08cy]
+          shift: [0.825cx + 3*2.54,0]
           rotate: -90
         params:
           side: F
@@ -555,7 +578,7 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.78cx + 4*2.54,-0.08cy]
+          shift: [0.825cx + 4*2.54,0]
           rotate: -90
         params:
           side: F
@@ -567,7 +590,7 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.78cx + 5*2.54,-0.08cy]
+          shift: [0.825cx + 5*2.54,0]
           rotate: -90
         params:
           side: F
@@ -579,7 +602,7 @@ pcbs:
         anchor:                # oled pins on the reverse
           ref:
             - matrix_inner_bottom
-          shift: [0.78cx + 2.54,-0.08cy]
+          shift: [0.825cx + 2.54,0]
           rotate: -90
         params:
           side: B
@@ -591,7 +614,7 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.78cx + 2*2.54,-0.08cy]
+          shift: [0.825cx + 2*2.54,0]
           rotate: -90
         params:
           side: B
@@ -603,7 +626,7 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.78cx + 3*2.54,-0.08cy]
+          shift: [0.825cx + 3*2.54,0]
           rotate: -90
         params:
           side: B
@@ -615,7 +638,7 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.78cx + 4*2.54,-0.08cy]
+          shift: [0.825cx + 4*2.54,0]
           rotate: -90
         params:
           side: B
@@ -627,7 +650,7 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.78cx + 5*2.54,-0.08cy]
+          shift: [0.825cx + 5*2.54,0]
           rotate: -90
         params:
           side: B
