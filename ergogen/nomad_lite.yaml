@@ -27,18 +27,18 @@ points:
         # nets:
           # from: =colrow
           # to: =column_net
-      # choc:
-      # # footprints for direct solder if needed
-        # type: choc
-        # anchor:
-          # #rotate: 180
-        # params:
-          # hotswap: false
-          # reverse: true
-          # keycaps: true
-        # nets:
-          # from: =colrow
-          # to: =column_net
+      choc:
+      # footprints for direct solder if needed
+        type: choc
+        anchor:
+          rotate: 180
+        params:
+          hotswap: false
+          reverse: true
+          keycaps: true
+        nets:
+          from: =colrow
+          to: =column_net
       choc_mini:
       # footprints for direct solder if needed
         type: chocmini
@@ -79,23 +79,23 @@ points:
             column_net: P20
             bind: [.1,0,0,0]
         ring:
-          stagger: cy
+          stagger: 1.15cy
           spread: cx
           key:
             column_net: P19
-            bind: [0,1,0,0]
+            bind: [0,1,0,0.05]
         middle:
           stagger: 8
           spread: cx
           key:
             column_net: P18
-            bind: [0,0,1.3cy,0]
+            bind: [0,0,cy+5,0]
         index:
           stagger: -6
           spread: cx
           key:
             column_net: P15
-            bind: [0,0,1.3cy-6,0]
+            bind: [0,0,0.942cy,0]
         inner:
           stagger: -0.3cy
           spread: cx
@@ -104,7 +104,7 @@ points:
             bind: [0,0,0,0]
       rows:                   # ----------------------- ROWS
         bottom:
-          row_net: P09
+          row_net: P9
         home:
           row_net: P10
         top:
@@ -115,33 +115,33 @@ points:
       columns:
         meta:
           spread: 0.15cx
-          stagger: -1.7 cy
+          stagger: -1.75cy
           #rotate: -15
           key:
-            column_net: P18
+            column_net: P19
             shift: [0,-2]
-            bind: [cy,4,0,0]
+            bind: [cy,6,0,0]
         home:
           spread: 1.19cx
           rotate: -15
-          #stagger: 
+
           key:
-            column_net: P15
+            column_net: P18
             rotate: 90
             tags:
               1u: false
               15u: true
-            bind: [2,13,7,4.5]
+            bind: [1,13,7,4.5]
         far:
-          spread: 1.11cx
+          spread: 1.1cx
           rotate: -15
           stagger: -0.5cy
           key:
-            column_net: P14
-            bind: [20,0,0,2]
+            column_net: P15
+            bind: [25,0,0,2]
       rows:
         thumb:
-          row_net: P08
+          row_net: P8
 # ================================================= OUTLINES
 outlines:
   exports:
@@ -187,19 +187,6 @@ outlines:
             shift: [1.89cx, -1.9cy]
           - ref: thumbfan_home_thumb
           - ref: matrix_inner_top
-    encoder_section:     # ------------------------- encoder
-      thumb_patch:
-        type: rectangle
-        size: [1.7cx, cy]
-        anchor:
-          - ref: thumbfan_meta_thumb
-            shift: [0, -0.5cy]
-      thumb_far_patch:
-        type: rectangle
-        size: [0.8cx, 0.6cy]
-        anchor:
-          - ref: thumbfan_far_thumb
-            shift: [-0.9cx, -0.04cy]
     switches:               # --------------------- switches
       main:
         type: keys
@@ -221,10 +208,6 @@ outlines:
         type: outline
         name: east_coast
         operation: add
-      encoder:
-        type: outline
-        name: encoder_section
-        operation: add
     base_outline:            # ---------------- base outline
       main:
         type: outline
@@ -240,31 +223,49 @@ outlines:
           radius: 1.05
           anchor:
             - ref: matrix_pinky_top
-              shift: [0.5 cx, 0.4 cy]
+              shift: [0.5 cx, 0.45 cy]
         bottom_left:
           type: circle
           radius: 1.05
           anchor:
             - ref: matrix_pinky_home
-              shift: [0.5 cx, -0.4 cy]
+              shift: [0.45 cx, -0.5 cy]
         top_mid:
           type: circle
           radius: 1.05
           anchor:
             - ref: matrix_index_top
-              shift: [0.5 cx, -0.5 cy]
+              shift: [-0.52 cx, -0.15 cy]
         bottom_mid:
           type: circle
           radius: 1.05
           anchor:
             - ref: matrix_index_bottom
-              shift: [0.5 cx, -0.5cy]
-        thumb:
+              shift: [0.4 cx, -0.6cy]
+        display_top:
+          type: circle
+          radius: 1.05
+          anchor:
+            - ref: matrix_inner_home
+              shift: [0.7 cx, 0.5cy]
+        display_bottom:
+          type: circle
+          radius: 1.05
+          anchor:
+            - ref: matrix_inner_bottom
+              shift: [0.7 cx, 0.5cy]
+        thumb_bottom:
           type: circle
           radius: 1.05
           anchor:
             - ref: thumbfan_home_thumb
-              shift: [0.2 cx, -0.65 cy]
+              shift: [-0.65cx, 0]
+        far:
+          type: circle
+          radius: 1.05
+          anchor:
+            - ref: thumbfan_far_thumb
+              shift: [0.4 cx, 0.6cy]
     mounting_holes:           # ------------- mounting holes
     # wider holes for standoffs
       $extends: outlines.exports.screw_holes
@@ -276,12 +277,13 @@ outlines:
         radius: 2.05
       bottom_mid:
         radius: 2.05
-      thumb:
+      thumb_bottom:
         radius: 2.05  
     switch_plate:             # --------------- switch plate
       main:
         type: outline
         name: keywell
+        fillet: 2
       switches:
         type: outline
         name: switches
@@ -342,7 +344,7 @@ outlines:
       mounting_holes:
       # wider holes in the pcb for standoffs
         type: outline
-        name: mounting_holes
+        name: screw_holes
         operation: subtract
 # ===================================================== PCBs        
 pcbs:
@@ -369,142 +371,160 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_top
-          shift: [22.5, -17.5]
+          shift: [1.35cx, -1.03cy]
           rotate: 270
-      # pad_plus:               # ------------------ battery +
-        # type: pad
-        # anchor:
-          # ref:
-            # - matrix_inner_top
-          # shift: [23, -12.5] #TODO: adjust position
-        # params:
-          # front: true
-          # back: true
-          # width: 1.5
-          # height: 1.5
-          # text: "B+"
-        # nets:
-          # net: RAW
-      jst_plug:                # ----------------- battery +
+      jst_plug_left:           # ----------------- battery +
         type: jstph
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.9 cx, -0.5cy]     #TODO reverse
-          rotate: 90
+          shift: [1.2cx, -0.45cy]
+          rotate: -90
         params:
           side: F
+          reverse: true
         nets:
           pos: Bplus
           neg: GND
-      # pad_minus:              # ------------------ battery -
-        # type: pad
-        # anchor:
-          # ref:
-            # - matrix_inner_top
-          # shift: [23, -9.5]
-        # params:
-          # front: true
-          # back: true
-          # width: 1.5
-          # height: 1.5
-          # text: "B-"
-        # nets:
-          # net: GND
+      jst_plug_right:          # ----------------- battery +
+        type: jstph
+        anchor:
+          ref:
+            - matrix_inner_bottom
+          shift: [1.2cx, -0.45cy]
+          rotate: -90
+        params:
+          side: B
+          reverse: true
+        nets:
+          pos: Bplus
+          neg: GND
       jumper_batt_left:     # -------------- battery jumpers
         type: jumper
         anchor:
           ref:
             - matrix_inner_top
-          shift: [0.7cx, 0]            #TODO adjust pos.
+          shift: [0.75cx, 0]            #TODO adjust pos.
           rotate: 0
         params:
           side: B
         nets:
           from: Bplus
-          to: RAW
+          to: Batt
       jumper_batt_right:
         type: jumper
         anchor:
           ref:
             - matrix_inner_top
-          shift: [0.7cx, 0]           #TODO adjust pos.
+          shift: [0.75cx, 0]           #TODO adjust pos.
           rotate: 0
         params:
-          side: F
+          side:
         nets:
           from: Bplus
-          to: RAW
+          to: Batt
       slider_left:            # ------- power button sliders
         type: slider
         anchor:
           ref:
             - matrix_inner_top
-          shift: [1cx,0.25cy]        #TODO define position
+          shift: [0.75cx,0.35cy]        #TODO define position
           rotate: -20.4
         params:
           side: B
         nets:                 #TODO define nets
           from: RAW
-          to: Bplus
+          to: Batt
       slider_right:            # ------ power button sliders
         type: slider
         anchor:
           ref:
             - matrix_inner_top
-          shift: [1cx,0.25cy]
+          shift: [0.75cx,0.35cy]
           rotate: -20.4
         params:
           side: F
         nets:									#TODO define nets
           from: RAW
-          to: Bplus
-      rotary:               # --------------- rotary encoder
-        type: rotary
-        anchor:
-          ref:
-            - matrix_inner_bottom
-          shift: [1.6cx, -1.35cy]
-          rotate: -30
-        nets:                            #TODO reverse
-          from: ''
-          to: ''
-          A: P04
-          B: GND
-          C: P05
+          to: Batt
+      # rotary:               # --------------- rotary encoder
+        # type: rotary
+        # anchor:
+          # ref:
+            # - thumbfan_far_thumb
+          # shift: [0, 1.12cy]
+          # #rotate: -60
+        # nets:                            #TODO reverse
+          # from: P14
+          # to: P8
+          # A: P4
+          # B: GND
+          # C: P5
       scroll:               # --------------- scroll encoder
         type: scrollwheel
         anchor:
           ref:
             - matrix_middle_bottom
-          shift: [1, -1.3cy]              #TODO reverse
+          shift: [1.5, -1.3cy]             
         nets:                             #TODO check nets
-          from: P19
-          to: P08
-          A: P06
+          from: P20
+          to: P8
+          A: P6
           B: GND
-          C: P07
+          C: P7
           D: ''
+        params:
+          reverse: true
       diode_scroll:
       # adding a diode for roll encoder switch to make 
       # part of matrix
         type: diode
         nets:
-          from: P19
-          to: P08
+          from: P20
+          to: P8
         anchor:
           ref:
             - matrix_middle_bottom
-          shift: [0, -cy-5]
+          shift: [0, -cy+5]
         params:
-           tht: false
+           tht: true
+      scroll_thumb:  # ---------------- scroll encoder thumb
+        type: scrollwheel
+        anchor:
+          ref:
+            - thumbfan_far_thumb
+          shift: [0.08cx, 1.35 cy]
+          rotate: -90
+        nets:                             #TODO check nets
+          from: P14
+          to: P8
+          A: P4
+          B: GND
+          C: P5
+          D: ''
+        params:
+          reverse: true
+      diode_scroll_thumb:
+      # adding a diode for roll encoder switch to make 
+      # part of matrix
+        type: diode
+        nets:
+          from: ''
+          to: ''
+        anchor:
+          ref:
+            - thumbfan_far_thumb
+          shift: [-0.55cx, 1.05cy]
+          rotate: 90
+        params:
+           tht: true
       reset_left:                  # ---------- reset button
         type: button
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [1.7cx, -0.53cy]
-          rotate: -90
+          shift: [1.53cx, -0.45cy]
+          #rotate: -90
         params:
           side: F
         nets:									#TODO rotate and adjust pos.
@@ -515,155 +535,160 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [1.7cx, -0.53cy]
-          rotate: -90
+          shift: [1.53cx, -0.45cy]
+          #rotate: -90
         params:
           side: B
         nets:									#TODO rotate and adjust pos.
           from: GND
           to: RST
-      oled_omni:							# ------------ nice!view slots
+      oled_left:							# ------------ nice!view slots
         type: niceview
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.845cx, -0.26cy]
+          shift: [0.945cx, -0.255cy]
           rotate: 90
         params:
           side: F
-        nets:									#TODO reverse
-          SDA: P22
-          SCL: P21
-          VCC: VCC
-          GND: GND
-          CS: P01
+        nets:
+          SDA: J_P2
+          SCL: J_P3
+          VCC: J_VCC
+          GND: J_GND
+          CS: J_P1
+      oled_right:							# ------------ nice!view slots
+        type: niceview
+        anchor:
+          ref:
+            - matrix_inner_bottom
+          shift: [0.945cx, -0.255cy]
+          rotate: 90
+        params:
+          side: B
+        nets:
+          SDA: J_P2
+          SCL: J_P3
+          VCC: J_VCC
+          GND: J_GND
+          CS: J_P1
       oled_jumper_1_left:     # --------------- oled jumpers
         type: jumper
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.825cx + 2.54,0]
+          shift: [0.925cx + 2.54,0]
           rotate: -90
         params:
           side: F
         nets:
-          from: ''
-          to: ''
+          from: P2
+          to: J_P2
       oled_jumper_2_left:
         type: jumper
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.825cx + 2*2.54,0]
+          shift: [0.925cx + 2*2.54,0]
           rotate: -90
         params:
           side: F
         nets:
-          from: ''
-          to: ''
+          from: P3
+          to: J_P3
       oled_jumper_3_left:
         type: jumper
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.825cx + 3*2.54,0]
+          shift: [0.925cx + 3*2.54,0]
           rotate: -90
         params:
           side: F
         nets:
-          from: ''
-          to: ''
+          from: VCC
+          to: J_VCC
       oled_jumper_4_left:
         type: jumper
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.825cx + 4*2.54,0]
+          shift: [0.925cx + 4*2.54,0]
           rotate: -90
         params:
           side: F
         nets:
-          from: ''
-          to: ''
+          from: GND
+          to: J_GND
       oled_jumper_5_left:
         type: jumper
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.825cx + 5*2.54,0]
+          shift: [0.925cx + 5*2.54,0]
           rotate: -90
         params:
           side: F
         nets:
-          from: ''
-          to: ''
+          from: P1
+          to: J_P1
       oled_jumper_1_right:     # -------------- oled jumpers
         type: jumper           # to be able to use the same
         anchor:                # oled pins on the reverse
           ref:
             - matrix_inner_bottom
-          shift: [0.825cx + 2.54,0]
+          shift: [0.925cx + 2.54,0]
           rotate: -90
         params:
           side: B
         nets:
-          from: ''
-          to: ''
+          from: P2
+          to: J_P2
       oled_jumper_2_right:
         type: jumper
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.825cx + 2*2.54,0]
+          shift: [0.925cx + 2*2.54,0]
           rotate: -90
         params:
           side: B
         nets:
-          from: ''
-          to: ''
+          from: P3
+          to: J_P3
       oled_jumper_3_right:
         type: jumper
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.825cx + 3*2.54,0]
+          shift: [0.925cx + 3*2.54,0]
           rotate: -90
         params:
           side: B
         nets:
-          from: ''
-          to: ''
+          from: VCC
+          to: J_VCC
       oled_jumper_4_right:
         type: jumper
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.825cx + 4*2.54,0]
+          shift: [0.925cx + 4*2.54,0]
           rotate: -90
         params:
           side: B
         nets:
-          from: ''
-          to: ''
+          from: GND
+          to: J_GND
       oled_jumper_5_right:
         type: jumper
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [0.825cx + 5*2.54,0]
+          shift: [0.925cx + 5*2.54,0]
           rotate: -90
         params:
           side: B
         nets:
-          from: ''
-          to: ''
-# cases:
-  # nomad_case:
-    # - type: outline
-      # name: case_bottom
-      # extrude: 5
-    # - type: outline
-      # name: bottom_plate
-      # extrude: 3
-      # shift: [0,0,3]
-      # operation: subtract
+          from: P1
+          to: J_P1
