@@ -115,14 +115,15 @@ points:
       columns:
         meta:
           spread: 0.15cx
-          stagger: -1.75cy
+          stagger: -1.35cy
           #rotate: -15
           key:
             column_net: P19
             shift: [0,-2]
-            bind: [cy,6,0,0]
+            bind: [cy,6,7,0]
         home:
           spread: 1.19cx
+          stagger: -0.4cy
           rotate: -15
 
           key:
@@ -131,11 +132,11 @@ points:
             tags:
               1u: false
               15u: true
-            bind: [1,13,7,4.5]
+            bind: [0,13,7,4.5]
         far:
-          spread: 1.1cx
+          spread: 1.15cx
           rotate: -15
-          stagger: -0.5cy
+          stagger: -0.4cy
           key:
             column_net: P15
             bind: [25,0,0,2]
@@ -265,7 +266,7 @@ outlines:
           radius: 1.05
           anchor:
             - ref: thumbfan_far_thumb
-              shift: [0.4 cx, 0.6cy]
+              shift: [0.4 cx, 0.63cy]
     mounting_holes:           # ------------- mounting holes
     # wider holes for standoffs
       $extends: outlines.exports.screw_holes
