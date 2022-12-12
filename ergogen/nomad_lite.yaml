@@ -59,9 +59,9 @@ points:
           from: =colrow
           to: =row_net
         anchor:
-          #shift: [0, -5]
-          shift: [0.45cx, 0]
-          rotate: 90
+          shift: [0, -0.5cy]
+          #shift: [0.45cx, 0]
+          #rotate: 90
         params:
           tht: true
   zones:
@@ -79,7 +79,7 @@ points:
             column_net: P20
             bind: [.1,0,0,0]
         ring:
-          stagger: 1.15cy
+          stagger: 1.25cy
           spread: cx
           key:
             column_net: P19
@@ -91,11 +91,11 @@ points:
             column_net: P18
             bind: [0,0,cy+5,0]
         index:
-          stagger: -6
+          stagger: -7
           spread: cx
           key:
             column_net: P15
-            bind: [0,0,0.942cy,0]
+            bind: [0,0,cy-2,0]
         inner:
           stagger: -0.3cy
           spread: cx
@@ -114,7 +114,7 @@ points:
         ref: matrix_index_bottom
       columns:
         meta:
-          spread: 0.15cx
+          spread: 0.2cx
           stagger: -1.35cy
           #rotate: -15
           key:
@@ -122,7 +122,7 @@ points:
             shift: [0,-2]
             bind: [cy,6,7,0]
         home:
-          spread: 1.19cx
+          spread: 1.14cx
           stagger: -0.4cy
           rotate: -15
 
@@ -167,15 +167,7 @@ outlines:
         corner: 2
     preview:                  # ------------ keycaps preview
       [keycap_outlines,keycap_outlines15]
-    east_coast:             # ---------------- right outline
-      - type: polygon
-        points:
-          - ref: matrix_inner_top
-            shift: [0.5 cx + 1, 0]
-          - ref: matrix_inner_bottom
-            shift: [0.5 cx + 1, 0]
-          - ref: matrix_middle_bottom
-          - ref: matrix_middle_top
+
     controller_section:     # ------------------- controller
       main:
         type: polygon
@@ -205,10 +197,6 @@ outlines:
       main:
         type: outline
         name: raw
-      east_coast:
-        type: outline
-        name: east_coast
-        operation: add
     base_outline:            # ---------------- base outline
       main:
         type: outline
@@ -230,19 +218,19 @@ outlines:
           radius: 1.05
           anchor:
             - ref: matrix_pinky_home
-              shift: [0.45 cx, -0.5 cy]
+              shift: [0.5 cx, -0.2 cy]
         top_mid:
           type: circle
           radius: 1.05
           anchor:
-            - ref: matrix_index_top
-              shift: [-0.52 cx, -0.15 cy]
+            - ref: matrix_inner_top
+              shift: [-0.5 cx, 0.45 cy]
         bottom_mid:
           type: circle
           radius: 1.05
           anchor:
             - ref: matrix_index_bottom
-              shift: [0.4 cx, -0.6cy]
+              shift: [-0.52 cx, -0.2cy]
         display_top:
           type: circle
           radius: 1.05
@@ -361,7 +349,7 @@ pcbs:
       edge:
         outline: bottom_plate
         layer: Edge.Cuts
-  nomad:                      # ---------------------- board
+  nomad_xs:                   # ---------------------- board
     outlines:
       edge:
         outline: pcb
@@ -372,15 +360,15 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_top
-          shift: [1.35cx, -1.03cy]
+          shift: [1.3cx, -1.03cy]
           rotate: 270
       jst_plug_left:           # ----------------- battery +
         type: jstph
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [1.2cx, -0.45cy]
-          rotate: -90
+          shift: [0.7cx, -0.5cy]
+          rotate: -180
         params:
           side: F
           reverse: true
@@ -392,8 +380,8 @@ pcbs:
         anchor:
           ref:
             - matrix_inner_bottom
-          shift: [1.2cx, -0.45cy]
-          rotate: -90
+          shift: [0.7cx, -0.5cy]
+          rotate: -180
         params:
           side: B
           reverse: true
@@ -466,7 +454,7 @@ pcbs:
         anchor:
           ref:
             - matrix_middle_bottom
-          shift: [1.5, -1.3cy]             
+          shift: [1.5, -1.35cy]             
         nets:                             #TODO check nets
           from: P20
           to: P8
@@ -486,7 +474,7 @@ pcbs:
         anchor:
           ref:
             - matrix_middle_bottom
-          shift: [0, -cy+5]
+          shift: [2, -cy+3]
         params:
            tht: true
       scroll_thumb:  # ---------------- scroll encoder thumb
@@ -510,8 +498,8 @@ pcbs:
       # part of matrix
         type: diode
         nets:
-          from: ''
-          to: ''
+          from: P14
+          to: P8
         anchor:
           ref:
             - thumbfan_far_thumb
